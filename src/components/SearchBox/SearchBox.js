@@ -7,7 +7,7 @@ function SearchBox(props) {
     <div>
       <input
         type="text"
-        placeholder="Search"
+        placeholder="шо загубив?"
         value={searchText}
         onChange={(event) => setSearchText(event.target.value)}
       />
