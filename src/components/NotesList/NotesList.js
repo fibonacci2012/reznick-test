@@ -1,9 +1,9 @@
-import './ListItem.css';
-function ListItem(props) {
+import './NotesList.css';
+function NotesList(props) {
   const { notes } = props;
 
   return (
-    <div>
+    <div className="notesList">
       {notes.map((note, index) => (
         <div key={index}>
           <h3>{note.title}</h3>
@@ -14,4 +14,4 @@ function ListItem(props) {
   );
 }
 
-export default ListItem;
+export default NotesList;
