@@ -1,8 +1,8 @@
 import './NotesList.css';
 import React, { useState, useEffect } from 'react';
-import NoteEditor from "../NoteEditor/NoteEditor";
+import {Button, Card, List} from "antd";
 
-const NotesList = () => {
+const NotesList = ({onDelete}) => {
 const [notes, setNotes] = useState([]);
 
 useEffect(() => {
@@ -16,22 +16,26 @@ useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
-  const handleNoteAdd = (newNote) => {
-    const updatedNotes = [...notes, newNote];
-    setNotes(updatedNotes);
-    localStorage.setItem('notes', JSON.stringify(updatedNotes));
-  };
-
-
   return (
-    <div>
-      {notes.map((note) => (
-        <div key={note.id}>
-          <h2>{note.title}</h2>
-          <p>{note.text}</p>
-        </div>
-      ))}
-    </div>
+      <List
+    grid={{
+      gutter: 16,
+      xs: 1,
+      sm: 2,
+      md: 4,
+      lg: 4,
+      xl: 6,
+      xxl: 3,
+    }}
+    dataSource={notes}
+    renderItem={(note) => (
+      <List.Item>
+        <Card title={note.title}>{note.text}<Button danger onClick={() => onDelete(note.id)}>del</Button></Card>
+
+      </List.Item>
+    )}
+  />
+
   );
 };
 
