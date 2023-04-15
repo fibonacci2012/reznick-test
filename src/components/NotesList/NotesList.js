@@ -5,16 +5,17 @@ import {Button, Card, List} from "antd";
 const NotesList = ({onDelete}) => {
 const [notes, setNotes] = useState([]);
 
+
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  }, [notes]);
+
 useEffect(() => {
     const savedNotes = localStorage.getItem('notes');
     if (savedNotes) {
       setNotes(JSON.parse(savedNotes));
     }
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notes));
-  }, [notes]);
 
   return (
       <List

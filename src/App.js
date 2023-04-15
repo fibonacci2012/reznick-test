@@ -9,7 +9,7 @@ import NotesList from "./components/NotesList/NotesList";
 
 function App() {
 const [notes, setNotes] = useState([]);
-function handleNoteDelete (id) {
+const handleNoteDelete = (id)=> {
     const newNotes = notes.filter(note => note.id !== id)
     setNotes(newNotes)
     localStorage.setItem('notes', JSON.stringify(newNotes))
@@ -22,7 +22,7 @@ function handleNoteDelete (id) {
   return (
     <div className="App">
       <NoteEditor onNoteAdd={handleNoteAdd}/>
-        <NotesList notes={notes} onDelete={handleNoteDelete}/>
+        <NotesList notes={notes} onDelete={handleNoteDelete.id}/>
     </div>
   );
 }
