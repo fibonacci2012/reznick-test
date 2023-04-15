@@ -1,46 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const NoteEditor = () => {
-  const [noteTitle, setNoteTitle] = useState('');
-  const [noteBody, setNoteBody] = useState('');
-  const [notes, setNotes] = useState([]);
+const NoteEditor = ({onNoteAdd}) => {
+  const [noteText, setNoteText] = useState('');
+  const handleTextChange = (event) => {
+    setNoteText(event.target.value);
+  };
 
-  useEffect(() => {
-    const savedNotes = localStorage.getItem('notes');
-    if (savedNotes) {
-      setNotes(JSON.parse(savedNotes));
+  const handleButtonClick = () => {
+    if (noteText.trim().length === 0) {
+      return;
     }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notes));
-  }, [notes]);
-
-  const handleTitleChange = (event) => {
-    setNoteTitle(event.target.value);
-  };
-
-  const handleBodyChange = (event) => {
-    setNoteBody(event.target.value);
-  };
-
-  const handleSaveClick = () => {
-    const id = Date.now().toString();
+    const now = new Date();
     const newNote = {
-      id: id,
-      title: noteTitle,
-      text: noteBody
+      id: now.getTime(),
+      title: noteText.trim().split('\n')[0],
+      text: noteText.trim(),
     };
-    setNotes([...notes, newNote]);
-    setNoteTitle('');
-    setNoteBody('');
+    onNoteAdd(newNote);
+    setNoteText('');
   };
 
   return (
     <div>
-      <input type="text" placeholder="Заголовок" value={noteTitle} onChange={handleTitleChange} />
-      <textarea placeholder="Текст нотатки" value={noteBody} onChange={handleBodyChange} />
-      <button onClick={handleSaveClick}>Зберегти</button>
+      <textarea
+        placeholder="Write your note here"
+        value={noteText}
+        onChange={handleTextChange}
+      />
+      <button onClick={handleButtonClick}>Save Note</button>
     </div>
   );
 };
