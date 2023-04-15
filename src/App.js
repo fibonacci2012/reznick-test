@@ -8,11 +8,17 @@ import './App.css';
 import NotesList from "./components/NotesList/NotesList";
 
 function App() {
+const [notes, setNotes] = useState([]);
 
+  const handleNoteAdd = (newNote) => {
+    const updatedNotes = [...notes, newNote];
+    setNotes(updatedNotes);
+    localStorage.setItem('notes', JSON.stringify(updatedNotes));
+  };
   return (
     <div className="App">
-      <NoteEditor/>
-        <NotesList/>
+      <NoteEditor onNoteAdd={handleNoteAdd}/>
+        <NotesList notes={notes}/>
     </div>
   );
 }
