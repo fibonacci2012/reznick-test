@@ -1,5 +1,5 @@
 import Card from 'react-bootstrap/Card';
-import DeleteButton from './DeleteButton';
+import DeleteButton from '../DeleteButton/DeleteButton';
 
 function Note(props) {
   function handleDelete() {
