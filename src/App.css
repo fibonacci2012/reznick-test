@@ -24,7 +24,7 @@
 
 .sidebar {
     width: 30%;
-    background-color: #e2e1e0;
+    border-right: grey 1px solid;
     display: flex;
     justify-content: center;
 

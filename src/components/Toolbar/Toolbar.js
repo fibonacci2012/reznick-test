@@ -8,7 +8,7 @@ const Toolbar = () => {
     const confirm = () => console.log('Yes')
     const cancel = () => console.log('No')
     return (
-        <div>
+        <div className="toolbar">
 
             <Popconfirm
     title="Delete the note"

@@ -1,4 +1,7 @@
-img {
+.toolbar img {
     height: 25px;
     width: 25px;
+}
+.toolbar {
+    border-bottom: grey 1px solid;
 }
