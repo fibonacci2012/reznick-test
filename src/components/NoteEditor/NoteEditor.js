@@ -7,7 +7,7 @@ const NoteEditor = ({onNoteAdd}) => {
   const handleTextChange = (e) => {
     setNoteText(e.target.value);
   };
-
+//Тут при кліці обрізає першу строку і виводить її як заголовок до нотатки та зберігає її у масив
   const handleButtonClick = () => {
     if (noteText.trim().length === 0) {
       return;
