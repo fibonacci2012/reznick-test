@@ -1,10 +1,18 @@
 import './NotesList.css';
 import React, { useState, useEffect } from 'react';
 import {Button, Card, List} from "antd";
+import NoteService from "../API/NoteService";
 
 const NotesList = () => {
 const [notes, setNotes] = useState([]);
+  async function fetchNotes() {
+        const notes = await NoteService.getAll();
+        setNotes(notes.data)
+    };
 
+    useEffect(() => {
+        fetchNotes()
+    }, [])
 
 
   return (
