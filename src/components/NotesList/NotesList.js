@@ -6,7 +6,6 @@ import imgTrash from "../../rsc/img/trash.png";
 
 const NotesList = ({arrayOfNotes}) => {
     const [notes, setNotes] = useState([]);
-    const [totalNotes, setTotalNotes] = useState([0]);
     const imgTrashC = <img src={imgTrash}/>
     const confirm = () => console.log('Yes')
     const cancel = () => console.log('No')
