@@ -2,20 +2,10 @@ import './NotesList.css';
 import React, { useState, useEffect } from 'react';
 import {Button, Card, List} from "antd";
 
-const NotesList = ({onDelete}) => {
+const NotesList = () => {
 const [notes, setNotes] = useState([]);
 
 
-  useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notes));
-  }, [notes]);
-
-useEffect(() => {
-    const savedNotes = localStorage.getItem('notes');
-    if (savedNotes) {
-      setNotes(JSON.parse(savedNotes));
-    }
-  }, []);
 
   return (
       <List
@@ -31,7 +21,7 @@ useEffect(() => {
     dataSource={notes}
     renderItem={(note) => (
       <List.Item>
-        <Card title={note.title}>{note.text}<Button danger onClick={() => onDelete(note.id)}>del</Button></Card>
+        <Card title={note.title}>{note.body}<Button danger>del</Button></Card>
 
       </List.Item>
     )}

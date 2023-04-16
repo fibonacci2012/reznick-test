@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Input} from "antd";
 
 const NoteEditor = ({onNoteAdd}) => {
   const [noteText, setNoteText] = useState('');
@@ -14,7 +15,7 @@ const NoteEditor = ({onNoteAdd}) => {
     const newNote = {
       id: now.getTime(),
       title: noteText.trim().split('\n')[0],
-      text: noteText.trim(),
+      body: noteText.trim(),
     };
     onNoteAdd(newNote);
     setNoteText('');
@@ -22,11 +23,8 @@ const NoteEditor = ({onNoteAdd}) => {
 
   return (
     <div>
-      <textarea
-        placeholder="Write your note here"
-        value={noteText}
-        onChange={handleTextChange}
-      />
+      <Input placeholder="Put your text" bordered={false} value={noteText} onChange={handleTextChange}/>
+
       <button onClick={handleButtonClick}>Save Note</button>
     </div>
   );
