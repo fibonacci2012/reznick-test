@@ -1,10 +1,11 @@
+import './NoteEditor.css';
 import React, { useState } from 'react';
-import {Input} from "antd";
+import {Button} from "antd";
 
 const NoteEditor = ({onNoteAdd}) => {
   const [noteText, setNoteText] = useState('');
-  const handleTextChange = (event) => {
-    setNoteText(event.target.value);
+  const handleTextChange = (e) => {
+    setNoteText(e.target.value);
   };
 
   const handleButtonClick = () => {
@@ -22,10 +23,10 @@ const NoteEditor = ({onNoteAdd}) => {
   };
 
   return (
-    <div>
-      <Input placeholder="Put your text" bordered={false} value={noteText} onChange={handleTextChange}/>
+    <div className="noteEditor__container">
+      <textarea placeholder="Put your text"  value={noteText} onChange={handleTextChange}/>
 
-      <button onClick={handleButtonClick}>Save Note</button>
+      <Button className="newNote__btn" onClick={handleButtonClick}>Save Note</Button>
     </div>
   );
 };

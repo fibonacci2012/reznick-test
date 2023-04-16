@@ -2,7 +2,6 @@ import {useState, useEffect} from 'react';
 import NoteEditor from './components/NoteEditor/NoteEditor';
 import './App.css';
 import NotesList from "./components/NotesList/NotesList";
-import axios from "axios";
 import {Button, Layout} from "antd";
 import Toolbar from "./components/Toolbar/Toolbar";
 import {Content, Header} from "antd/es/layout/layout";
@@ -23,27 +22,21 @@ function App() {
         setNotes(updatedNotes);
         localStorage.setItem('notes', JSON.stringify(updatedNotes));
     };
-    const notesArr = localStorage.getItem('notes');
-    async function fetchNotes() {
-        const notes = await NoteService.getAll();
-        setNotes(notes.data)
-    };
+
+
     return (
         <div className="App">
-            <Layout>
-                <Header className="headerStyle">
-                    <Toolbar></Toolbar>
-                </Header>
-                <Sider className="siderStyle">
+            <header className="toolbarContainer">
+                <Toolbar></Toolbar>
+            </header>
+            <div className="contentContainer">
+                <div className="sidebar">
                     <NotesList notes={notes}/>
-                </Sider>
-                <Layout>
-
-                    <Content className="contentStyle">
-                        <NoteEditor onNoteAdd={handleNoteAdd}/>
-                    </Content>
-                </Layout>
-            </Layout>
+                </div>
+                <div className="editorContainer">
+                    <NoteEditor onNoteAdd={handleNoteAdd}/>
+                </div>
+            </div>
 
 
         </div>
