@@ -8,11 +8,7 @@ const NotesList = ({}) => {
     const [notes, setNotes] = useState([]);
     const imgTrashC = <img src={imgTrash}/>
 
-    const confirm = ({remove}) => {
-        const removeNote = (note) => {
-            setNotes(notes.filter(n => n.id !== note.id))
-        };
-    };
+    const confirm = () => console.log("Yes")
 
 
     const cancel = () => console.log('No')
@@ -44,7 +40,7 @@ const NotesList = ({}) => {
                     extra={<Popconfirm
                         title="Delete the note"
                         description="Are you sure to delete this note?"
-                        onConfirm={confirm({})}
+                        onConfirm={confirm}
                         onCancel={cancel}
                         okText="Yes"
                         cancelText="No"
