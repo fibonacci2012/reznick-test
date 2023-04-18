@@ -1,0 +1,19 @@
+.noteEditor {
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-content: space-between;
+    }
+}
+.noteEditor {
+    &__container {
+        textarea {
+            min-width: 400px;
+            width: 100%;
+            height: 400px;
+            resize: none;
+            border: 1px solid #000;
+        }
+    }
+}
+
