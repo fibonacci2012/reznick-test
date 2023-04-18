@@ -38,6 +38,12 @@ function App() {
         setNotes(updatedNotes);
         localStorage.setItem('notes', JSON.stringify(updatedNotes));
     };
+
+    // toggle active note
+    const handleSetActiveNoteID = useCallback((id) => {
+        setActiveNoteID(activeNoteID === id ? 0 : id)
+    }, [activeNoteID])
+
     // for now show editor only if note selected
     return (
         <div className="App">
@@ -46,7 +52,7 @@ function App() {
             </header>
             <div className="contentContainer">
                 <div className="sidebar">
-                    <NotesList handleNoteDelete={handleNoteDelete} setActiveNote={setActiveNoteID} notes={notes}/>
+                    <NotesList handleNoteDelete={handleNoteDelete} setActiveNote={handleSetActiveNoteID} notes={notes}/>
                 </div>
 
                 <div className="editorContainer">
