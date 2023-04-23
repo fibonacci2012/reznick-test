@@ -1,34 +1,35 @@
-import './NoteEditor.css';
-import React, { useState } from 'react';
+import './NoteEditor.scss';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Button} from "antd";
 
-const NoteEditor = ({onNoteAdd}) => {
-  const [noteText, setNoteText] = useState('');
-  const handleTextChange = (e) => {
-    setNoteText(e.target.value);
-  };
-//Тут при кліці обрізає першу строку і виводить її як заголовок до нотатки та зберігає її у масив
-  const handleButtonClick = () => {
-    if (noteText.trim().length === 0) {
-      return;
-    }
-    const now = new Date();
-    const newNote = {
-      id: now.getTime(),
-      title: noteText.trim().split('\n')[0],
-      body: noteText.trim(),
+const NoteEditor = (props) => {
+    const {activeNote, onNoteChange} = props;
+    // set text on component rendering
+    const [noteText, setNoteText] = useState(activeNote.text ?? '');
+
+    // set text when click to note on NoteList component
+    useEffect(() => {
+        setNoteText(activeNote.text)
+    }, [activeNote])
+
+    // change text in textarea in real time
+    const handleTextChange = (e) => {
+        setNoteText(e.target.value);
     };
-    onNoteAdd(newNote);
-    setNoteText('');
-  };
 
-  return (
-    <div className="noteEditor__container">
-      <textarea placeholder="Put your text"  value={noteText} onChange={handleTextChange}/>
+    // this function should change existing note text not create new note (send new note value and id to parent)
+    const handleButtonClick = useCallback(() => {
+        onNoteChange(activeNote.id, noteText)
+    }, [activeNote.id, noteText, onNoteChange]);
 
-      <Button className="newNote__btn" onClick={handleButtonClick}>Save Note</Button>
-    </div>
-  );
+    return (
+        <div className="noteEditor__container">
+            <textarea className="noteEditor__el__textArea" placeholder="Put your text" value={noteText}
+                      onChange={handleTextChange}/>
+
+            <Button className="noteEditor__btn__newNote" onClick={handleButtonClick}>Save note</Button>
+        </div>
+    );
 };
 
 export default NoteEditor;
