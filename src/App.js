@@ -10,12 +10,12 @@ import NoteService from "./components/API/NoteService";
 
 function App() {
     const [notes, setNotes] = useState([
-        {id: 1, title: "Note 1", text: "asdasdasd"},
-        {id: 2, title: "Note 2", text: "xzxczxczczxczxc"},
-        {id: 3, title: "Note 3", text: "hjkhjkhjkhjkhjkhjk"}
+        {id: 1, title: "New note", text: ""},
+        {id: 2, title: "Note 2", text: "xzxc\n"},
+        {id: 3, title: "Note 3", text: "1234567890 \n abcdefghjkl"}
     ]);
 
-    const [activeNoteID, setActiveNoteID] = useState(0)
+    const [activeNoteID, setActiveNoteID] = useState(1)
 
     const handleNoteDelete = (id) => {
         const newNotes = notes.filter(note => note.id !== id)
@@ -26,11 +26,12 @@ function App() {
     // change note text value on save using map function and replace element with same id (you can find some different solution with findIndex for example)
     const handleNoteChange = (id, value) => {
         const updatedNotes = notes.map(note => {
-            if(note.id === id) {
+            if (note.id === id) {
                 return {
                     id: note.id,
-                    text: value,
-                    title: note.title
+                    title: value.trim().split('\n')[0],
+                    text: value.trim()
+
                 }
             }
             return note
@@ -43,21 +44,17 @@ function App() {
     const handleSetActiveNoteID = useCallback((id) => {
         setActiveNoteID(activeNoteID === id ? 0 : id)
     }, [activeNoteID])
-
+    const activeNote = notes.find(note => note.id === activeNoteID);
     // for now show editor only if note selected
     return (
         <div className="App">
-            <header className="toolbarContainer">
-                <Toolbar/>
-            </header>
+            <Toolbar handleNoteDelete={handleNoteDelete} activeNote={activeNote} notes={notes}/>
             <div className="contentContainer">
                 <div className="sidebar">
                     <NotesList handleNoteDelete={handleNoteDelete} setActiveNote={handleSetActiveNoteID} notes={notes}/>
                 </div>
-
-                <div className="editorContainer">
-                    {!!activeNoteID && <NoteEditor activeNote={notes.find(note => note.id === activeNoteID)} onNoteChange={handleNoteChange}/>}
-                </div>
+                {!!activeNoteID && <NoteEditor activeNote={activeNote}
+                                               onNoteChange={handleNoteChange}/>}
             </div>
 
 

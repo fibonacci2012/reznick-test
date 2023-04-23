@@ -1,7 +1,14 @@
-.toolbar img {
-    height: 25px;
-    width: 25px;
+.toolbar__container {
+    height: 50px;
+    width: 100%;
+    display: inline-grid;
+    grid-template-columns: 1fr 5fr 2fr;
+    justify-items: center;
+    margin: auto;
+    align-content: center;
 }
-.toolbar {
-    border-bottom: grey 1px solid;
+
+.toolbar__grid__1row {
+    display: flex;
+    justify-content: center;
 }
