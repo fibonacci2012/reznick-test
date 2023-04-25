@@ -12,7 +12,7 @@ const NoteEditor = (props) => {
         setNoteText(activeNote.text)
     }, [activeNote])
 
-    // change text in textarea in real time
+    // change text in NoteList in real time
     const handleTextChange = (e) => {
         setNoteText(e.target.value);
     };

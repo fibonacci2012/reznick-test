@@ -1,7 +1,4 @@
 import './NotesList.scss';
-import React, {useState, useEffect} from 'react';
-import {Button, Card, List, Popconfirm} from "antd";
-import NoteService from "../API/NoteService";
 import imgTrash from "../../img/trash.png";
 
 const NotesList = (props) => {
@@ -17,11 +14,11 @@ const NotesList = (props) => {
                         {(note.title.length < 10
                             ? note.title
                             : note.title.slice(0, 10) + '...')}
-                        <div
-                            className='noteList__el__description'>{
-                            (note.text.length < 10
-                                ? note.text
-                                : note.text.slice(10, 20) + '...')}</div>
+                        <div className='noteList__el__description'>
+                            {(note.text.length < 10
+                                ? ''
+                                : note.text.slice(10, 20) + '...')}
+                        </div>
                     </div>
                     <img
                         className='noteList__el__delete'
@@ -30,7 +27,6 @@ const NotesList = (props) => {
                         onClick={() => handleNoteDelete(note.id)}
                     />
                 </div>
-
             ))}
         </div>
 

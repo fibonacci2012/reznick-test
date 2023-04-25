@@ -5,15 +5,18 @@ import {Button, Popconfirm} from "antd";
 import './Toolbar.css';
 import {useCallback} from "react";
 
-const Toolbar = (/*props*/) => {
-    // const {notes, activeNote, handleNoteDelete} = props;
+const Toolbar = (props) => {
+    const {notes, activeNoteID, handleNoteDelete} = props;
     const [imgTrashC, imgThumbnailsC, imgListC] = [
         <img src={imgTrash} alt="delete"/>,
         <img src={imgThumbnails} alt="thumbnails"/>,
         <img src={imgList} alt="list"/>
     ];
 
-    const confirm = () => console.log('Yes');
+    const confirm = useCallback(() => {
+        console.log('Yes')
+        handleNoteDelete(activeNoteID)
+    }, [activeNoteID]);
     const cancel = () => console.log('No');
     const listView = () => console.log('List view on')
     const thumbnailsView = () => console.log('Thumbnails view on')
