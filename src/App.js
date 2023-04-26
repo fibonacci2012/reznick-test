@@ -5,13 +5,10 @@ import NotesList from "./components/NotesList/NotesList";
 import Toolbar from "./components/Toolbar/Toolbar";
 
 function App() {
-    const [notes, setNotes] = useState([
-        {id: 1, title: "New note", text: "0987654321"},
-        {id: 2, title: "Note 2", text: "xzxc\n"},
-        {id: 3, title: "Note 3", text: "1234567890 \n abcdefghjkl"}
-    ]);
+    const [notes, setNotes] = useState([]);
 
     const [activeNoteID, setActiveNoteID] = useState(0)
+    const [create, setCreate] = useState(false)
 
     const handleNoteDelete = (id) => {
         const newNotes = notes.filter(note => note.id !== id)
@@ -25,9 +22,10 @@ function App() {
         const updatedNotes = notes.map(note => {
             if (note.id === id) {
                 return {
+                    //before .trim work dynamically and cut every space or /n
                     id: note.id,
-                    title: value.trim().split('\n')[0],
-                    text: value.trim()
+                    title: value,
+                    text: value
 
                 }
             }
@@ -36,26 +34,36 @@ function App() {
         setNotes(updatedNotes);
         localStorage.setItem('notes', JSON.stringify(updatedNotes));
     };
+    const onNoteCreate = (value) => {
+        const newNote = {id: new Date().getTime(), title: value, text: value}
+        const newNotes = [...notes, newNote]
+        setNotes([...notes, {id: new Date().getTime(), title: value, text: value}]);
+        localStorage.setItem('notes', JSON.stringify(newNotes));
+        setCreate(false)
+        handleSetActiveNoteID(newNote.id)
+    };
 
     // toggle active note
     const handleSetActiveNoteID = useCallback((id) => {
         setActiveNoteID(activeNoteID === id ? 0 : id)
     }, [activeNoteID])
+
     const activeNote = notes.find(note => note.id === activeNoteID);
     // for now show editor only if note selected
     return (
         <div className="App">
-            <Toolbar handleNoteDelete={handleNoteDelete} activeNoteID={activeNoteID} notes={notes}/>
+            <Toolbar handleNoteDelete={handleNoteDelete} activeNoteID={activeNoteID} notes={notes} setCreate={setCreate}/>
             <div className="contentContainer">
                 <div className="sidebar">
                     <NotesList handleNoteDelete={handleNoteDelete} setActiveNote={handleSetActiveNoteID} notes={notes}
                                handleNoteChange={handleNoteChange}/>
                 </div>
-                {!!activeNoteID &&
+                {(!!activeNoteID || create) &&
                     <NoteEditor
-                        create
+                        create={create}
                         activeNote={activeNote}
-                                onNoteChange={handleNoteChange}
+                        onNoteChange={handleNoteChange}
+                        onNoteCreate={onNoteCreate}
                     />}
             </div>
         </div>

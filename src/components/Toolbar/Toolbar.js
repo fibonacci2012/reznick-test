@@ -6,7 +6,7 @@ import './Toolbar.css';
 import {useCallback} from "react";
 
 const Toolbar = (props) => {
-    const {notes, activeNoteID, handleNoteDelete} = props;
+    const {notes, activeNoteID, handleNoteDelete, setCreate} = props;
     const [imgTrashC, imgThumbnailsC, imgListC] = [
         <img src={imgTrash} alt="delete"/>,
         <img src={imgThumbnails} alt="thumbnails"/>,
@@ -40,7 +40,7 @@ const Toolbar = (props) => {
                 </Popconfirm>
             </div>
              <div className="toolbar__grid__3row">
-                <Button>New note</Button>
+                <Button onClick={() => setCreate(true)}>New note</Button>
             </div>
         </header>
     );
