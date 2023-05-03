@@ -36,7 +36,7 @@ const Toolbar = (props) => {
                     okText="Yeah, bitch!"
                     cancelText="No"
                 >
-                    <Button icon={imgTrashC}></Button>
+                    <Button className="toolbar__btn_delete" icon={imgTrashC}></Button>
                 </Popconfirm>
             </div>
              <div className="toolbar__grid__3row">

@@ -5,11 +5,11 @@ import {Button} from "antd";
 const NoteEditor = (props) => {
     const {activeNote, onNoteChange, create, onNoteCreate} = props;
     // set text on component rendering
-    const [noteText, setNoteText] = useState(activeNote?.text ?? '');
+    const [noteText, setNoteText] = useState(activeNote?.body ?? '');
 
     // set text when click to note on NoteList component
     useEffect(() => {
-        if (!!activeNote) setNoteText(activeNote.text)
+        if (!!activeNote) setNoteText(activeNote.body)
     }, [activeNote])
 
     // change text in NoteList in real time
@@ -26,12 +26,15 @@ const NoteEditor = (props) => {
         onNoteChange(activeNote.id, noteText)
     }, [activeNote?.id, noteText, onNoteChange]);
 
-    return(
+    return (
         <div className="noteEditor__container">
+            <div className="noteEditor__container__wrapper">
             <textarea className="noteEditor__el__textArea" placeholder="Put your text" value={noteText}
                       onChange={create ? handleNewTextChange : handleTextChange}/>
-
-            <Button className="noteEditor__btn__newNote" onClick={handleButtonClick}>Save note</Button>
+            </div>
+            <div className="noteEditor__container__wrapper">
+                <Button onClick={handleButtonClick}>Save note</Button>
+            </div>
         </div>
     )
 

@@ -10,7 +10,7 @@
 
 .contentContainer {
     display: inline-grid;
-    grid-template-columns: 2fr 4fr;
+    grid-template-columns: 3fr 7fr;
     width: 100%;
     padding-bottom: 10px;
 }

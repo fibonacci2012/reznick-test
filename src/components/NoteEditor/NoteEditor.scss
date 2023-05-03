@@ -1,19 +1,28 @@
 .noteEditor {
-    &__container {
-        display: flex;
-        align-items: center;
-    }
-}
-.noteEditor {
-    &__container {
-        textarea {
-            min-width: 200px;
-            width: 100%;
-            height: 400px;
-            resize: none;
-            border: none;
-            outline: none;
-        }
-    }
+  &__container {
+    display: grid;
+    grid-template-columns: 5fr 2fr;
+    align-items: flex-start;
+  }
 }
 
+.noteEditor {
+  &__container {
+    textarea {
+      min-width: 200px;
+      width: -webkit-fill-available;
+      height: 400px;
+      resize: none;
+      border: none;
+      outline: none;
+    }
+  }
+}
+
+.noteEditor {
+  &__container {
+    &__wrapper {
+      padding: 15px;
+    }
+  }
+}

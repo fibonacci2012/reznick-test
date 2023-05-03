@@ -1,14 +1,16 @@
 .toolbar__container {
     height: 50px;
-    width: 100%;
-    display: inline-grid;
-    grid-template-columns: 1fr 5fr 2fr;
-    justify-items: center;
+    display: grid;
+    grid-template-columns: 3fr 5fr 2fr;
     margin: auto;
     align-content: center;
 }
 
 .toolbar__grid__1row {
     display: flex;
-    justify-content: center;
+    justify-content: right;
+}
+
+.toolbar__grid__1row, .toolbar__grid__2row, .toolbar__grid__3row {
+    padding: 0 15px;
 }

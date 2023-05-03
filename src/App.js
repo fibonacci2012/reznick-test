@@ -3,6 +3,8 @@ import NoteEditor from './components/NoteEditor/NoteEditor';
 import './App.css';
 import NotesList from "./components/NotesList/NotesList";
 import Toolbar from "./components/Toolbar/Toolbar";
+import NoteService from "./components/API/NoteService";
+import axios from "axios";
 
 function App() {
     const [notes, setNotes] = useState([]);
@@ -10,6 +12,14 @@ function App() {
     const [activeNoteID, setActiveNoteID] = useState(0)
     const [create, setCreate] = useState(false)
 
+async function fetchNotes () {
+        const notes = await NoteService.getAll();
+        setNotes(notes.data);
+    }
+    useEffect(() => {
+        fetchNotes();
+                console.log(notes)
+    },[]);
     const handleNoteDelete = (id) => {
         const newNotes = notes.filter(note => note.id !== id)
         setNotes(newNotes)
@@ -25,7 +35,7 @@ function App() {
                     //before .trim work dynamically and cut every space or /n
                     id: note.id,
                     title: value,
-                    text: value
+                    body: value
 
                 }
             }
@@ -48,26 +58,30 @@ function App() {
         setActiveNoteID(activeNoteID === id ? 0 : id)
     }, [activeNoteID])
 
-    const activeNote = notes.find(note => note.id === activeNoteID);
+   const activeNote = notes.find(note => note.id === activeNoteID);
     // for now show editor only if note selected
-    return (
-        <div className="App">
-            <Toolbar handleNoteDelete={handleNoteDelete} activeNoteID={activeNoteID} notes={notes} setCreate={setCreate}/>
+    return (<div className="App">
+            <Toolbar handleNoteDelete={handleNoteDelete}
+                     activeNoteID={activeNoteID}
+                     notes={notes}
+                     setCreate={setCreate}
+            />
             <div className="contentContainer">
                 <div className="sidebar">
-                    <NotesList handleNoteDelete={handleNoteDelete} setActiveNote={handleSetActiveNoteID} notes={notes}
-                               handleNoteChange={handleNoteChange}/>
+                    <NotesList handleNoteDelete={handleNoteDelete}
+                               setActiveNote={handleSetActiveNoteID}
+                               notes={notes}
+                               handleNoteChange={handleNoteChange}
+                    />
                 </div>
-                {(!!activeNoteID || create) &&
-                    <NoteEditor
-                        create={create}
-                        activeNote={activeNote}
-                        onNoteChange={handleNoteChange}
-                        onNoteCreate={onNoteCreate}
-                    />}
+                {(!!activeNoteID || create) && <NoteEditor
+                    create={create}
+                    activeNote={activeNote}
+                    onNoteChange={handleNoteChange}
+                    onNoteCreate={onNoteCreate}
+                />}
             </div>
-        </div>
-    );
+        </div>);
 }
 
 export default App;

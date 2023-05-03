@@ -15,9 +15,9 @@ const NotesList = (props) => {
                             ? note.title
                             : note.title.slice(0, 10) + '...')}
                         <div className='noteList__el__description'>
-                            {(note.text.length < 10
+                            {(note.body.length < 10
                                 ? ''
-                                : note.text.slice(10, 20) + '...')}
+                                : note.body.slice(10, 20) + '...')}
                         </div>
                     </div>
                     <img
