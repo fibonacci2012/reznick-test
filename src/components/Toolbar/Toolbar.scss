@@ -14,3 +14,9 @@
 .toolbar__grid__1row, .toolbar__grid__2row, .toolbar__grid__3row {
     padding: 0 15px;
 }
+
+.list-view-button {
+    &.active {
+        background-color: red;
+    }
+}
