@@ -22,9 +22,11 @@ const Toolbar = (props) => {
     const cancel = () => console.log('No');
     const listView = () => {
         setIsList(true)
+        listState(isList)
     }
     const thumbnailsView = () => {
         setIsList(false)
+        listState(isList)
     }
 
     return (
