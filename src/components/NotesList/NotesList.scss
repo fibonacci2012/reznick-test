@@ -15,16 +15,14 @@ img {
 
     &__wrapper {
       padding: 10px;
-
       border: 1px solid #000;
       transition: 0.3s all ease-in-out;
-      margin-bottom: 5px;
       border-radius: 10px;
-
 
       &:hover {
         border: 1px solid blue;
       }
+
     }
 
     &__description {
@@ -43,4 +41,15 @@ img {
       }
     }
   }
+}
+
+.noteList__thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 10px;
+  gap: 15px;
+}
+.display_none {
+  display: none;
 }

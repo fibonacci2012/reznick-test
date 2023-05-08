@@ -14,3 +14,13 @@
 .toolbar__grid__1row, .toolbar__grid__2row, .toolbar__grid__3row {
     padding: 0 15px;
 }
+
+.list-view-button {
+    background-color: #eeeeee;
+    border-color: #00000000;
+    transition: background-color 0.5s ;
+}
+.active {
+    background-color: #d2d2d2;
+    border-color: #00000000;
+}

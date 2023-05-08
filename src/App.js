@@ -4,22 +4,27 @@ import './App.css';
 import NotesList from "./components/NotesList/NotesList";
 import Toolbar from "./components/Toolbar/Toolbar";
 import NoteService from "./components/API/NoteService";
-import axios from "axios";
+import classNames from "classnames";
 
 function App() {
     const [notes, setNotes] = useState([]);
-
+    const [isList, setIsList] = useState(true)
+    const listState = (listState) => {
+        setIsList(listState)
+        console.log(isList)
+    };
     const [activeNoteID, setActiveNoteID] = useState(0)
     const [create, setCreate] = useState(false)
 
-async function fetchNotes () {
+    async function fetchNotes() {
         const notes = await NoteService.getAll();
         setNotes(notes.data);
     }
+
     useEffect(() => {
         fetchNotes();
-                console.log(notes)
-    },[]);
+        console.log(notes)
+    }, []);
     const handleNoteDelete = (id) => {
         const newNotes = notes.filter(note => note.id !== id)
         setNotes(newNotes)
@@ -58,30 +63,32 @@ async function fetchNotes () {
         setActiveNoteID(activeNoteID === id ? 0 : id)
     }, [activeNoteID])
 
-   const activeNote = notes.find(note => note.id === activeNoteID);
+    const activeNote = notes.find(note => note.id === activeNoteID);
     // for now show editor only if note selected
     return (<div className="App">
-            <Toolbar handleNoteDelete={handleNoteDelete}
-                     activeNoteID={activeNoteID}
-                     notes={notes}
-                     setCreate={setCreate}
-            />
-            <div className="contentContainer">
-                <div className="sidebar">
-                    <NotesList handleNoteDelete={handleNoteDelete}
-                               setActiveNote={handleSetActiveNoteID}
-                               notes={notes}
-                               handleNoteChange={handleNoteChange}
-                    />
-                </div>
-                {(!!activeNoteID || create) && <NoteEditor
-                    create={create}
-                    activeNote={activeNote}
-                    onNoteChange={handleNoteChange}
-                    onNoteCreate={onNoteCreate}
-                />}
+        <Toolbar handleNoteDelete={handleNoteDelete}
+                 activeNoteID={activeNoteID}
+                 notes={notes}
+                 setCreate={setCreate}
+                 listState={listState}
+        />
+        <div className="contentContainer_thumbnails">
+            <div className="sidebar">
+                <NotesList handleNoteDelete={handleNoteDelete}
+                           setActiveNote={handleSetActiveNoteID}
+                           notes={notes}
+                           handleNoteChange={handleNoteChange}
+                           classNames={classNames('noteList__thumbnails', [!isList && 'display_none'])}
+                />
             </div>
-        </div>);
+            {(!!activeNoteID || create) && <NoteEditor
+                create={create}
+                activeNote={activeNote}
+                onNoteChange={handleNoteChange}
+                onNoteCreate={onNoteCreate}
+            />}
+        </div>
+    </div>);
 }
 
 export default App;

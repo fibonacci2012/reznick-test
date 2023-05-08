@@ -7,7 +7,7 @@ const NotesList = (props) => {
 
     return (
 
-        <div className='noteList__wrapper'>
+        <div className='noteList'>
             {notes.map((note) => (
                 <div key={note.id} className='noteList__el__wrapper'>
                     <div className='noteList__el' onClick={() => setActiveNote(note.id)}>
