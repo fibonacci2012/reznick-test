@@ -11,7 +11,7 @@ function App() {
     const [isList, setIsList] = useState(true)
     const listState = (listState) => {
         setIsList(listState)
-        console.log(isList)
+        console.log(listState)
     };
     const [activeNoteID, setActiveNoteID] = useState(0)
     const [create, setCreate] = useState(false)
@@ -78,7 +78,7 @@ function App() {
                            setActiveNote={handleSetActiveNoteID}
                            notes={notes}
                            handleNoteChange={handleNoteChange}
-                           listState={classNames('noteList__thumbnails', [isList])}
+                           listState={isList}
                 />
             </div>
             {(!!activeNoteID || create) && <NoteEditor
@@ -86,6 +86,7 @@ function App() {
                 activeNote={activeNote}
                 onNoteChange={handleNoteChange}
                 onNoteCreate={onNoteCreate}
+                listState={isList}
             />}
         </div>
     </div>);

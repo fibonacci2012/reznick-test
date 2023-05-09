@@ -1,9 +1,10 @@
 import './NoteEditor.scss';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Button} from "antd";
+import classNames from "classnames";
 
 const NoteEditor = (props) => {
-    const {activeNote, onNoteChange, create, onNoteCreate} = props;
+    const {activeNote, onNoteChange, create, onNoteCreate, listState} = props;
     // set text on component rendering
     const [noteText, setNoteText] = useState(activeNote?.body ?? '');
 
@@ -27,7 +28,7 @@ const NoteEditor = (props) => {
     }, [activeNote?.id, noteText, onNoteChange]);
 
     return (
-        <div className="noteEditor__container">
+        <div className={classNames('noteEditor__container', [listState && 'noteEditor_active'], [!listState && 'noteEditor_deactivated'])}>
             <div className="noteEditor__container__wrapper">
             <textarea className="noteEditor__el__textArea" placeholder="Put your text" value={noteText}
                       onChange={create ? handleNewTextChange : handleTextChange}/>
