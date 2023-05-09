@@ -1,13 +1,14 @@
 import './NotesList.scss';
 import imgTrash from "../../img/trash.png";
+import classNames from "classnames";
 
 const NotesList = (props) => {
     // notes as prop from parent component
-    const {notes, setActiveNote, handleNoteDelete} = props;
+    const {notes, setActiveNote, handleNoteDelete, listState} = props;
 
     return (
 
-        <div className='noteList'>
+        <div className={classNames('noteList', [listState && 'noteList__thumbnails'])}>
             {notes.map((note) => (
                 <div key={note.id} className='noteList__el__wrapper'>
                     <div className='noteList__el' onClick={() => setActiveNote(note.id)}>

@@ -78,7 +78,7 @@ function App() {
                            setActiveNote={handleSetActiveNoteID}
                            notes={notes}
                            handleNoteChange={handleNoteChange}
-                           classNames={classNames('noteList__thumbnails', [!isList && 'display_none'])}
+                           listState={classNames('noteList__thumbnails', [isList])}
                 />
             </div>
             {(!!activeNoteID || create) && <NoteEditor

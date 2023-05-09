@@ -2,7 +2,7 @@ import imgTrash from '../../img/trash.png';
 import imgThumbnails from '../../img/thumbnails1.png';
 import imgList from '../../img/list-view.png'
 import {Button, Popconfirm} from "antd";
-import './Toolbar.css';
+import './Toolbar.scss';
 import {useCallback, useState} from "react";
 import classNames from "classnames";
 
@@ -32,9 +32,9 @@ const Toolbar = (props) => {
     return (
         <header className="toolbar__container">
             <div className="toolbar__grid__1row">
-                <Button className={classNames('list-view-button', [isList && 'active'])} icon={imgThumbnailsC}
+                <Button className={classNames('list-view-button', [isList && 'active'])} icon={imgListC}
                         onClick={listView}/>
-                <Button className={classNames('list-view-button', [!isList && 'active'])} icon={imgListC}
+                <Button className={classNames('list-view-button', [!isList && 'active'])} icon={imgThumbnailsC}
                         onClick={thumbnailsView}/>
             </div>
             <div className="toolbar__grid__2row">
