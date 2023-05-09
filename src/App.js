@@ -11,7 +11,6 @@ function App() {
     const [isList, setIsList] = useState(true)
     const listState = (listState) => {
         setIsList(listState)
-        console.log(listState)
     };
     const [activeNoteID, setActiveNoteID] = useState(0)
     const [create, setCreate] = useState(false)
@@ -61,6 +60,7 @@ function App() {
     // toggle active note
     const handleSetActiveNoteID = useCallback((id) => {
         setActiveNoteID(activeNoteID === id ? 0 : id)
+        setIsList(true)
     }, [activeNoteID])
 
     const activeNote = notes.find(note => note.id === activeNoteID);
@@ -72,7 +72,7 @@ function App() {
                  setCreate={setCreate}
                  listState={listState}
         />
-        <div className="contentContainer_thumbnails">
+        <div className={classNames('contentContainer', [!isList && 'contentContainer__thumbnails'])}>
             <div className="sidebar">
                 <NotesList handleNoteDelete={handleNoteDelete}
                            setActiveNote={handleSetActiveNoteID}
