@@ -39,6 +39,7 @@ const Toolbar = (props) => {
             </div>
             <div className="toolbar__grid__2row">
                 <Popconfirm
+                    disabled={!activeNoteID}
                     title="Delete the note"
                     description="Are you sure to delete this note?"
                     onConfirm={confirm}
@@ -46,7 +47,7 @@ const Toolbar = (props) => {
                     okText="Yeah, bitch!"
                     cancelText="No"
                 >
-                    <Button className="toolbar__btn_delete" icon={imgTrashC}></Button>
+                    {<Button disabled={!activeNoteID} className="toolbar__btn_delete" icon={imgTrashC}/>}
                 </Popconfirm>
             </div>
             <div className="toolbar__grid__3row">

@@ -4,17 +4,17 @@ import classNames from "classnames";
 
 const NotesList = (props) => {
     // notes as prop from parent component
-    const {notes, setActiveNote, handleNoteDelete, listState} = props;
+    const {notes, setActiveNote, handleNoteDelete, listState, activeNoteID} = props;
 
     return (
-        <div className={classNames('noteList__thumbnails')}>
-            {!!notes?.length && notes.map((note) => (
-                <div key={note.id} className='noteList__el__wrapper'>
+        <div className={classNames('noteList', [!listState && 'noteList__thumbnails'])}>
+            {!!notes?.length && notes.map((note, index) => (
+                <div key={note.id} className={classNames('noteList__el__wrapper', [note.id === activeNoteID && 'noteList__el__wrapper_active'])}>
                     <div className='noteList__el' onClick={() => setActiveNote(note.id)}>
                         <div className='noteList__el__title'>
-                            {(note.title.length < 10
+                            {listState ? (note.title.length < 10
                                 ? note.title
-                                : note.title.slice(0, 10) + '...')}
+                                : note.title.slice(0, 10) + '...') : index}
                         </div>
                         <div className='noteList__el__description'>
                             {(note.body.length < 10

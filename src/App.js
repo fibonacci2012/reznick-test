@@ -1,6 +1,6 @@
 import {useState, useEffect, useCallback} from 'react';
 import NoteEditor from './components/NoteEditor/NoteEditor';
-import './App.css';
+import './App.scss';
 import NotesList from "./components/NotesList/NotesList";
 import Toolbar from "./components/Toolbar/Toolbar";
 import NoteService from "./components/API/NoteService";
@@ -68,7 +68,6 @@ function App() {
     // toggle active note
     const handleSetActiveNoteID = useCallback((id) => {
         setActiveNoteID(activeNoteID === id ? 0 : id)
-        setIsList(true)
     }, [activeNoteID])
 
     //тупий костиль тому що, наскільки зрозумів, без нього activeNote
@@ -98,6 +97,7 @@ function App() {
                     <NotesList handleNoteDelete={handleNoteDelete}
                                setActiveNote={handleSetActiveNoteID}
                                notes={notes}
+                               activeNoteID={activeNoteID}
                                handleNoteChange={handleNoteChange}
                                listState={isList}
                     />

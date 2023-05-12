@@ -1,9 +1,9 @@
 .toolbar__container {
     height: 50px;
-    display: grid;
-    grid-template-columns: 3fr 5fr 2fr;
+    display: flex;
     margin: auto;
-    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .toolbar__grid__1row {

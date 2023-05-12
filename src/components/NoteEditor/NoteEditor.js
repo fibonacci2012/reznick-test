@@ -11,9 +11,9 @@ const NoteEditor = (props) => {
     // set text when click to note on NoteList component
     useEffect(() => {
         if (!!activeNote) {
-          setNoteText(activeNote.body)
+            setNoteText(activeNote.body)
         } else {
-          setNoteText('')
+            setNoteText('')
         }
     }, [activeNote])
 
@@ -32,14 +32,16 @@ const NoteEditor = (props) => {
     }, [activeNote?.id, noteText, onNoteChange]);
 
     return (
-        <div className={classNames('noteEditor__container', [listState && 'noteEditor_active'], [!listState && 'noteEditor_deactivated'])}>
+        <div
+            className={classNames('noteEditor__container', [listState && 'noteEditor_active'], [!listState && 'noteEditor_deactivated'])}
+        >
             <div className="noteEditor__container__wrapper">
-            <textarea className="noteEditor__el__textArea" placeholder="Put your text" value={noteText}
-                      onChange={create ? handleNewTextChange : handleTextChange}/>
+                <textarea className="noteEditor__el__textArea" placeholder="Put your text" value={noteText}
+                          onChange={create ? handleNewTextChange : handleTextChange}/>
             </div>
-            <div className="noteEditor__container__wrapper">
-                <Button onClick={handleButtonClick}>Save note</Button>
-            </div>
+            {/*<div className="noteEditor__container__wrapper">*/}
+            {/*    <Button onClick={handleButtonClick}>Save note</Button>*/}
+            {/*</div>*/}
         </div>
     )
 
