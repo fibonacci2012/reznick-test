@@ -17,12 +17,19 @@ function App() {
 
     async function fetchNotes() {
         const notes = await NoteService.getAll();
-        setNotes(notes.data);
+        localStorage.setItem('notes', JSON.stringify(notes.data))
+    }
+
+    function getLocalStorageNotes() {
+        const data = JSON.parse(localStorage.getItem('notes'))
+        if (!data) {
+            fetchNotes()
+        }
+        setNotes(data)
     }
 
     useEffect(() => {
-        fetchNotes();
-        console.log(notes)
+        getLocalStorageNotes()
     }, []);
     const handleNoteDelete = (id) => {
         const newNotes = notes.filter(note => note.id !== id)
@@ -63,9 +70,19 @@ function App() {
         setIsList(true)
     }, [activeNoteID])
 
-    const activeNote = notes.find(note => note.id === activeNoteID);
+    //тупий костиль тому що, наскільки зрозумів, без нього activeNote
+    // не встигає отримати дані, бо воно його не відрендерило ще
+    // як пофіксити ще не дивився
+    if (!notes) return setTimeout(() => {
+        window.location.reload()
+    }, 3000);
+
+   const activeNote = notes.find(note => note.id === activeNoteID)
+
     // for now show editor only if note selected
-    return (<div className="App">
+    return (
+
+        <div className="App">
         <Toolbar handleNoteDelete={handleNoteDelete}
                  activeNoteID={activeNoteID}
                  notes={notes}
