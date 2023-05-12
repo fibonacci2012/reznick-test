@@ -10,7 +10,11 @@ const NoteEditor = (props) => {
 
     // set text when click to note on NoteList component
     useEffect(() => {
-        if (!!activeNote) setNoteText(activeNote.body)
+        if (!!activeNote) {
+          setNoteText(activeNote.body)
+        } else {
+          setNoteText('')
+        }
     }, [activeNote])
 
     // change text in NoteList in real time

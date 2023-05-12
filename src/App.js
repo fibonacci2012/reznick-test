@@ -23,9 +23,9 @@ function App() {
     function getLocalStorageNotes() {
         const data = JSON.parse(localStorage.getItem('notes'))
         if (!data) {
-            fetchNotes()
+            // fetchNotes()
         }
-        setNotes(data)
+        setNotes(!!data ? data : [])
     }
 
     useEffect(() => {
@@ -56,9 +56,10 @@ function App() {
         localStorage.setItem('notes', JSON.stringify(updatedNotes));
     };
     const onNoteCreate = (value) => {
-        const newNote = {id: new Date().getTime(), title: value, text: value}
-        const newNotes = [...notes, newNote]
-        setNotes([...notes, {id: new Date().getTime(), title: value, text: value}]);
+        const newNote = {id: new Date().getTime(), title: value, body: value}
+        let newNotes = notes
+        newNotes.push(newNote)
+        setNotes(newNotes);
         localStorage.setItem('notes', JSON.stringify(newNotes));
         setCreate(false)
         handleSetActiveNoteID(newNote.id)
@@ -73,40 +74,43 @@ function App() {
     //тупий костиль тому що, наскільки зрозумів, без нього activeNote
     // не встигає отримати дані, бо воно його не відрендерило ще
     // як пофіксити ще не дивився
-    if (!notes) return setTimeout(() => {
-        window.location.reload()
-    }, 3000);
+    // if (!notes) return setTimeout(() => {
+    //     window.location.reload()
+    // }, 3000);
 
-   const activeNote = notes.find(note => note.id === activeNoteID)
+    const activeNote = useCallback(() => notes?.find(note => note.id === activeNoteID), [notes, activeNoteID])
 
     // for now show editor only if note selected
     return (
 
         <div className="App">
-        <Toolbar handleNoteDelete={handleNoteDelete}
-                 activeNoteID={activeNoteID}
-                 notes={notes}
-                 setCreate={setCreate}
-                 listState={listState}
-        />
-        <div className={classNames('contentContainer', [!isList && 'contentContainer__thumbnails'])}>
-            <div className="sidebar">
-                <NotesList handleNoteDelete={handleNoteDelete}
-                           setActiveNote={handleSetActiveNoteID}
-                           notes={notes}
-                           handleNoteChange={handleNoteChange}
-                           listState={isList}
-                />
+            <Toolbar handleNoteDelete={handleNoteDelete}
+                     activeNoteID={activeNoteID}
+                     notes={notes}
+                     setCreate={() => {
+                         setCreate(true)
+                         setActiveNoteID(0)
+                     }}
+                     listState={listState}
+            />
+            <div className={classNames('contentContainer', [!isList && 'contentContainer__thumbnails'])}>
+                <div className="sidebar">
+                    <NotesList handleNoteDelete={handleNoteDelete}
+                               setActiveNote={handleSetActiveNoteID}
+                               notes={notes}
+                               handleNoteChange={handleNoteChange}
+                               listState={isList}
+                    />
+                </div>
+                {(!!activeNoteID || create) && <NoteEditor
+                    create={create}
+                    activeNote={activeNote()}
+                    onNoteChange={handleNoteChange}
+                    onNoteCreate={onNoteCreate}
+                    listState={isList}
+                />}
             </div>
-            {(!!activeNoteID || create) && <NoteEditor
-                create={create}
-                activeNote={activeNote}
-                onNoteChange={handleNoteChange}
-                onNoteCreate={onNoteCreate}
-                listState={isList}
-            />}
-        </div>
-    </div>);
+        </div>);
 }
 
 export default App;

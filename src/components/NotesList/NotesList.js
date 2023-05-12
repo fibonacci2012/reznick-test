@@ -7,14 +7,15 @@ const NotesList = (props) => {
     const {notes, setActiveNote, handleNoteDelete, listState} = props;
 
     return (
-
         <div className={classNames('noteList__thumbnails')}>
-            {notes.map((note) => (
+            {!!notes?.length && notes.map((note) => (
                 <div key={note.id} className='noteList__el__wrapper'>
                     <div className='noteList__el' onClick={() => setActiveNote(note.id)}>
-                        {(note.title.length < 10
-                            ? note.title
-                            : note.title.slice(0, 10) + '...')}
+                        <div className='noteList__el__title'>
+                            {(note.title.length < 10
+                                ? note.title
+                                : note.title.slice(0, 10) + '...')}
+                        </div>
                         <div className='noteList__el__description'>
                             {(note.body.length < 10
                                 ? ''

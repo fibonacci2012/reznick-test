@@ -50,7 +50,7 @@ const Toolbar = (props) => {
                 </Popconfirm>
             </div>
             <div className="toolbar__grid__3row">
-                <Button onClick={() => setCreate(true)}>New note</Button>
+                <Button onClick={() => setCreate()}>New note</Button>
             </div>
         </header>
     );
