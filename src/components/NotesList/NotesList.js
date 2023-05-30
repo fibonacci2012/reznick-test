@@ -1,4 +1,5 @@
 import './NotesList.scss';
+import { DragDropContext } from 'react-beautiful-dnd';
 import imgTrash from "../../img/trash.png";
 import classNames from "classnames";
 
@@ -7,6 +8,7 @@ const NotesList = (props) => {
     const {notes, setActiveNote, handleNoteDelete, listState} = props;
 
     return (
+        <DragDropContext>
         <div className={classNames('noteList__thumbnails')}>
             {!!notes?.length && notes.map((note) => (
                 <div key={note.id} className='noteList__el__wrapper'>
@@ -31,7 +33,7 @@ const NotesList = (props) => {
                 </div>
             ))}
         </div>
-
+</DragDropContext>
     );
 };
 

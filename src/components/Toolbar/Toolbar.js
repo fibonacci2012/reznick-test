@@ -16,7 +16,6 @@ const Toolbar = (props) => {
     const [isList, setIsList] = useState(true)
 
     const confirm = useCallback(() => {
-        console.log('Yes')
         handleNoteDelete(activeNoteID)
     }, [activeNoteID]);
     const cancel = () => console.log('No');
@@ -24,20 +23,23 @@ const Toolbar = (props) => {
         setIsList(true)
         listState(true)
     }
+    function activeDelete () {
+        return activeNoteID === 0;
+    }
     const thumbnailsView = () => {
         setIsList(false)
         listState(false)
     }
 
     return (
-        <header className="toolbar__container">
+        <header className="toolbar toolbar__grid">
             <div className="toolbar__grid__1row">
+                <div className="toolbar__grid__1row__switcher">
                 <Button className={classNames('list-view-button', [isList && 'active'])} icon={imgListC}
                         onClick={listView}/>
                 <Button className={classNames('list-view-button', [!isList && 'active'])} icon={imgThumbnailsC}
                         onClick={thumbnailsView}/>
-            </div>
-            <div className="toolbar__grid__2row">
+                </div>
                 <Popconfirm
                     title="Delete the note"
                     description="Are you sure to delete this note?"
@@ -45,12 +47,17 @@ const Toolbar = (props) => {
                     onCancel={cancel}
                     okText="Yeah, bitch!"
                     cancelText="No"
+                    disabled={activeDelete}
                 >
                     <Button className="toolbar__btn_delete" icon={imgTrashC}></Button>
                 </Popconfirm>
+
+                <Button onClick={() => setCreate()}>New note</Button>
+            </div>
+            <div className="toolbar__grid__2row">
+
             </div>
             <div className="toolbar__grid__3row">
-                <Button onClick={() => setCreate()}>New note</Button>
             </div>
         </header>
     );

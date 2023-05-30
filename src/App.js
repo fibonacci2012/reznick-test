@@ -26,6 +26,9 @@ function App() {
             // fetchNotes()
         }
         setNotes(!!data ? data : [])
+        // а чому б тоді тут не зробити:
+        // setNotes(data || []);
+        // ?
     }
 
     useEffect(() => {
@@ -70,13 +73,6 @@ function App() {
         setActiveNoteID(activeNoteID === id ? 0 : id)
         setIsList(true)
     }, [activeNoteID])
-
-    //тупий костиль тому що, наскільки зрозумів, без нього activeNote
-    // не встигає отримати дані, бо воно його не відрендерило ще
-    // як пофіксити ще не дивився
-    // if (!notes) return setTimeout(() => {
-    //     window.location.reload()
-    // }, 3000);
 
     const activeNote = useCallback(() => notes?.find(note => note.id === activeNoteID), [notes, activeNoteID])
 
