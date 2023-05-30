@@ -23,9 +23,8 @@ const Toolbar = (props) => {
         setIsList(true)
         listState(true)
     }
-    // function activeDelete () {
-    //     return activeNoteID === 0;
-    // }
+
+
     const thumbnailsView = () => {
         setIsList(false)
         listState(false)
@@ -47,7 +46,7 @@ const Toolbar = (props) => {
                     onCancel={cancel}
                     okText="Yeah, bitch!"
                     cancelText="No"
-                    // disabled={activeDelete}
+                    disabled={(activeNoteID === 0)}
                 >
                     <Button
                         className={classNames("toolbar__grid__1row__btn_delete", [!activeNoteID && 'toolbar__grid__1row__btn_delete-disabled'])}
