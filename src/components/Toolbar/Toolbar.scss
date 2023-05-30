@@ -13,6 +13,11 @@
     display: flex;
     justify-content: space-between;
 
+    &__btn_delete-disabled {
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
     &__switcher {
       background-color: #eeeeee;
       border-radius: 5px;
@@ -28,5 +33,10 @@
       background-color: #d2d2d2;
       border-color: #00000000;
     }
+  }
+}
+
+.toolbar {
+  &__btn_delete-disabled {
   }
 }

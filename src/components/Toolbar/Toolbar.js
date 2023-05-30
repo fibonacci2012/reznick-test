@@ -23,22 +23,22 @@ const Toolbar = (props) => {
         setIsList(true)
         listState(true)
     }
-    function activeDelete () {
-        return activeNoteID === 0;
-    }
+    // function activeDelete () {
+    //     return activeNoteID === 0;
+    // }
     const thumbnailsView = () => {
         setIsList(false)
         listState(false)
     }
 
     return (
-        <header className="toolbar toolbar__grid">
+        <header className="toolbar__grid">
             <div className="toolbar__grid__1row">
                 <div className="toolbar__grid__1row__switcher">
-                <Button className={classNames('list-view-button', [isList && 'active'])} icon={imgListC}
-                        onClick={listView}/>
-                <Button className={classNames('list-view-button', [!isList && 'active'])} icon={imgThumbnailsC}
-                        onClick={thumbnailsView}/>
+                    <Button className={classNames('list-view-button', [isList && 'active'])} icon={imgListC}
+                            onClick={listView}/>
+                    <Button className={classNames('list-view-button', [!isList && 'active'])} icon={imgThumbnailsC}
+                            onClick={thumbnailsView}/>
                 </div>
                 <Popconfirm
                     title="Delete the note"
@@ -47,9 +47,11 @@ const Toolbar = (props) => {
                     onCancel={cancel}
                     okText="Yeah, bitch!"
                     cancelText="No"
-                    disabled={activeDelete}
+                    // disabled={activeDelete}
                 >
-                    <Button className="toolbar__btn_delete" icon={imgTrashC}></Button>
+                    <Button
+                        className={classNames("toolbar__grid__1row__btn_delete", [!activeNoteID && 'toolbar__grid__1row__btn_delete-disabled'])}
+                        icon={imgTrashC}></Button>
                 </Popconfirm>
 
                 <Button onClick={() => setCreate()}>New note</Button>
