@@ -41,12 +41,10 @@ function App() {
         setActiveNoteID(0)
     }
 
-    // change note text value on save using map function and replace element with same id (you can find some different solution with findIndex for example)
     const handleNoteChange = (id, value) => {
         const updatedNotes = notes.map(note => {
             if (note.id === id) {
                 return {
-                    //before .trim work dynamically and cut every space or /n
                     id: note.id,
                     title: value,
                     body: value
@@ -71,7 +69,6 @@ function App() {
     // toggle active note
     const handleSetActiveNoteID = useCallback((id) => {
         setActiveNoteID(activeNoteID === id ? 0 : id)
-        setIsList(true)
     }, [activeNoteID])
 
     const activeNote = useCallback(() => notes?.find(note => note.id === activeNoteID), [notes, activeNoteID])
@@ -89,13 +86,14 @@ function App() {
                      }}
                      listState={listState}
             />
-            <div className={classNames('contentContainer', [!isList && 'contentContainer__thumbnails'])}>
+            <div className={classNames('contentContainer')}>
                 <div className="sidebar">
                     <NotesList handleNoteDelete={handleNoteDelete}
                                setActiveNote={handleSetActiveNoteID}
                                notes={notes}
                                handleNoteChange={handleNoteChange}
                                listState={isList}
+                               activeNoteID={activeNoteID}
                     />
                 </div>
                 {(!!activeNoteID || create) && <NoteEditor
@@ -103,7 +101,6 @@ function App() {
                     activeNote={activeNote()}
                     onNoteChange={handleNoteChange}
                     onNoteCreate={onNoteCreate}
-                    listState={isList}
                 />}
             </div>
         </div>);
