@@ -78,38 +78,41 @@ function App() {
     }
 
     return (
-        <div className="App">
+        <DragDropContext>
+            {() => (
+                <div className="App">
+                    <Toolbar handleNoteDelete={handleNoteDelete}
+                             activeNoteID={activeNoteID}
+                             notes={notes}
+                             setCreate={() => {
+                                 setCreate(true)
+                                 setActiveNoteID(0)
+                             }}
+                             listState={listState}
+                    />
+                    <div className={classNames('contentContainer')}>
+                        <div className="sidebar">
+                            <NotesList handleNoteDelete={handleNoteDelete}
+                                       setActiveNote={handleSetActiveNoteID}
+                                       activeNoteID={activeNoteID}
+                                       notes={notes}
+                                       handleNoteChange={handleNoteChange}
+                                       listState={isList}
 
-            <DragDropContext>
-                <Toolbar handleNoteDelete={handleNoteDelete}
-                         activeNoteID={activeNoteID}
-                         notes={notes}
-                         setCreate={() => {
-                             setCreate(true)
-                             setActiveNoteID(0)
-                         }}
-                         listState={listState}
-                />
-                <div className={classNames('contentContainer')}>
-                    <div className="sidebar">
-                        <NotesList handleNoteDelete={handleNoteDelete}
-                                   setActiveNote={handleSetActiveNoteID}
-                                   activeNoteID={activeNoteID}
-                                   notes={notes}
-                                   handleNoteChange={handleNoteChange}
-                                   listState={isList}
-
-                        />
+                            />
+                        </div>
+                        {(!!activeNoteID || create) && <NoteEditor
+                            create={create}
+                            activeNote={activeNote()}
+                            onNoteChange={handleNoteChange}
+                            onNoteCreate={onNoteCreate}
+                        />}
                     </div>
-                    {(!!activeNoteID || create) && <NoteEditor
-                        create={create}
-                        activeNote={activeNote()}
-                        onNoteChange={handleNoteChange}
-                        onNoteCreate={onNoteCreate}
-                    />}
                 </div>
-            </DragDropContext>
-        </div>
-    )}
+
+            )};
+        </DragDropContext>
+    )
+}
 
 export default App;
