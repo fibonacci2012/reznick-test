@@ -4,23 +4,17 @@ import './App.css';
 import NotesList from "./components/NotesList/NotesList";
 import Toolbar from "./components/Toolbar/Toolbar";
 import classNames from "classnames";
-import {createBrowserRouter} from "react-router-dom";
+import {DragDropContext} from "react-beautiful-dnd";
+
 function App() {
     const [notes, setNotes] = useState([]);
     const [isList, setIsList] = useState(true)
     const listState = (listState) => {
-        setIsList(listState)};
+        setIsList(listState)
+    };
     const [activeNoteID, setActiveNoteID] = useState(0)
     const [create, setCreate] = useState(false)
 
-    let router = createBrowserRouter([
-        {path: "/",
-        element: <NotesList />,
-        children: [
-            {path: "notes"
-            }
-        ]}
-    ]);
     /*async function fetchNotes() {
         const notes = await NoteService.getAll();
         localStorage.setItem('notes', JSON.stringify(notes.data))
@@ -47,6 +41,7 @@ function App() {
         setActiveNoteID(0)
     }
 
+    //real-time save changes
     const handleNoteChange = (id, value) => {
         const updatedNotes = notes.map(note => {
             if (note.id === id) {
@@ -76,12 +71,16 @@ function App() {
         setActiveNoteID(activeNoteID === id ? 0 : id)
     }, [activeNoteID])
 
-    const activeNote = useCallback(() => notes?.find(note => note.id === activeNoteID), [notes, activeNoteID])
-
     // for now show editor only if note selected
-    return (
+    const activeNote = useCallback(() => notes?.find(note => note.id === activeNoteID), [notes, activeNoteID])
+    const onDragEnd = (result) => {
 
-            <div className="App">
+    }
+
+    return (
+        <div className="App">
+
+            <DragDropContext>
                 <Toolbar handleNoteDelete={handleNoteDelete}
                          activeNoteID={activeNoteID}
                          notes={notes}
@@ -91,30 +90,26 @@ function App() {
                          }}
                          listState={listState}
                 />
+                <div className={classNames('contentContainer')}>
+                    <div className="sidebar">
+                        <NotesList handleNoteDelete={handleNoteDelete}
+                                   setActiveNote={handleSetActiveNoteID}
+                                   activeNoteID={activeNoteID}
+                                   notes={notes}
+                                   handleNoteChange={handleNoteChange}
+                                   listState={isList}
 
-                    <div className={classNames('contentContainer')}>
-
-                            <div className="sidebar">
-                                <NotesList handleNoteDelete={handleNoteDelete}
-                                           setActiveNote={handleSetActiveNoteID}
-                                           activeNoteID={activeNoteID}
-                                           notes={notes}
-                                           handleNoteChange={handleNoteChange}
-                                           listState={isList}
-
-                                />
-                            </div>
-                        {(!!activeNoteID || create) && <NoteEditor
-                            create={create}
-                            activeNote={activeNote()}
-                            onNoteChange={handleNoteChange}
-                            onNoteCreate={onNoteCreate}
-                        />}
-
+                        />
                     </div>
-
-            </div>
-    )
-}
+                    {(!!activeNoteID || create) && <NoteEditor
+                        create={create}
+                        activeNote={activeNote()}
+                        onNoteChange={handleNoteChange}
+                        onNoteCreate={onNoteCreate}
+                    />}
+                </div>
+            </DragDropContext>
+        </div>
+    )}
 
 export default App;
