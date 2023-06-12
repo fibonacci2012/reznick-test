@@ -1,37 +1,33 @@
-import { Modal, Button } from 'react-bootstrap';
-import {useState} from "react";
+import {useCallback, useState} from "react";
+import imgTrash from '../../img/trash.png';
+import {Button, Popconfirm} from "antd";
+import classNames from "classnames";
 
 
 function DeleteButton(props) {
-  const [showModal, setShowModal] = useState(false);
-
-  function handleDelete() {
-    props.onDelete();
-    setShowModal(false);
-  }
-
-  return (
-    <>
-      <Button variant="danger" onClick={() => setShowModal(true)}>
-        Видалити
-      </Button>
-
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Видалення нотатки</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Ви впевнені, що хочете видалити цю нотатку?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Нє, нє, нє
-          </Button>
-          <Button variant="danger" onClick={handleDelete}>
-            Видалити к чорту
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
-  );
+    const {handleNoteDelete, activeNoteID} = props
+    const [imgTrashC] = [<img src={imgTrash} alt="delete"/>]
+    const confirm = useCallback(() => {
+        handleNoteDelete(activeNoteID)
+    }, [activeNoteID]);
+    const cancel = () => console.log('No');
+    return (
+        <div className={classNames("delete_btn")}>
+            <Popconfirm
+                title="Delete the note"
+                description="Are you sure to delete this note?"
+                onConfirm={confirm}
+                onCancel={cancel}
+                okText="Yeah, bitch!"
+                cancelText="No"
+                disabled={(activeNoteID === 0)}
+            >
+                <Button
+                    className={classNames("toolbar__grid__1row__btn_delete", [!activeNoteID && 'toolbar__grid__1row__btn_delete-disabled'])}
+                    icon={imgTrashC}></Button>
+            </Popconfirm>
+        </div>
+    )
 }
 
 export default DeleteButton;

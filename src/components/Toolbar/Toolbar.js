@@ -5,14 +5,12 @@ import {Button, Popconfirm} from "antd";
 import './Toolbar.scss';
 import {useCallback, useState} from "react";
 import classNames from "classnames";
+import DeleteButton from "../DeleteButton/DeleteButton";
 
 const Toolbar = (props) => {
     const {notes, activeNoteID, handleNoteDelete, setCreate, listState} = props;
-    const [imgTrashC, imgThumbnailsC, imgListC] = [
-        <img src={imgTrash} alt="delete"/>,
-        <img src={imgThumbnails} alt="thumbnails"/>,
-        <img src={imgList} alt="list"/>
-    ];
+    const [imgTrashC, imgThumbnailsC, imgListC] = [<img src={imgTrash} alt="delete"/>,
+        <img src={imgThumbnails} alt="thumbnails"/>, <img src={imgList} alt="list"/>];
     const [isList, setIsList] = useState(true)
 
     const confirm = useCallback(() => {
@@ -30,8 +28,7 @@ const Toolbar = (props) => {
         listState(false)
     }
 
-    return (
-        <header className="toolbar__grid">
+    return (<header className="toolbar__grid">
             <div className="toolbar__grid__1row">
                 <div className="toolbar__grid__1row__switcher">
                     <Button className={classNames('list-view-button', [isList && 'active'])} icon={imgListC}
@@ -39,19 +36,10 @@ const Toolbar = (props) => {
                     <Button className={classNames('list-view-button', [!isList && 'active'])} icon={imgThumbnailsC}
                             onClick={thumbnailsView}/>
                 </div>
-                <Popconfirm
-                    title="Delete the note"
-                    description="Are you sure to delete this note?"
-                    onConfirm={confirm}
-                    onCancel={cancel}
-                    okText="Yeah, bitch!"
-                    cancelText="No"
-                    disabled={(activeNoteID === 0)}
-                >
-                    <Button
-                        className={classNames("toolbar__grid__1row__btn_delete", [!activeNoteID && 'toolbar__grid__1row__btn_delete-disabled'])}
-                        icon={imgTrashC}></Button>
-                </Popconfirm>
+                <DeleteButton
+                    activeNoteID={activeNoteID}
+                    handleNoteDelete={handleNoteDelete}
+                />
 
                 <Button onClick={() => setCreate()}>New note</Button>
             </div>
@@ -60,8 +48,7 @@ const Toolbar = (props) => {
             </div>
             <div className="toolbar__grid__3row">
             </div>
-        </header>
-    );
+        </header>);
 };
 
 export default Toolbar;

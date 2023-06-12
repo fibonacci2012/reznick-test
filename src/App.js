@@ -3,22 +3,28 @@ import NoteEditor from './components/NoteEditor/NoteEditor';
 import './App.css';
 import NotesList from "./components/NotesList/NotesList";
 import Toolbar from "./components/Toolbar/Toolbar";
-import NoteService from "./components/API/NoteService";
 import classNames from "classnames";
-
+import {createBrowserRouter} from "react-router-dom";
 function App() {
     const [notes, setNotes] = useState([]);
     const [isList, setIsList] = useState(true)
     const listState = (listState) => {
-        setIsList(listState)
-    };
+        setIsList(listState)};
     const [activeNoteID, setActiveNoteID] = useState(0)
     const [create, setCreate] = useState(false)
 
-    async function fetchNotes() {
+    let router = createBrowserRouter([
+        {path: "/",
+        element: <NotesList />,
+        children: [
+            {path: "notes"
+            }
+        ]}
+    ]);
+    /*async function fetchNotes() {
         const notes = await NoteService.getAll();
         localStorage.setItem('notes', JSON.stringify(notes.data))
-    }
+    }*/
 
     function getLocalStorageNotes() {
         const data = JSON.parse(localStorage.getItem('notes'))
@@ -48,7 +54,6 @@ function App() {
                     id: note.id,
                     title: value,
                     body: value
-
                 }
             }
             return note
@@ -76,34 +81,40 @@ function App() {
     // for now show editor only if note selected
     return (
 
-        <div className="App">
-            <Toolbar handleNoteDelete={handleNoteDelete}
-                     activeNoteID={activeNoteID}
-                     notes={notes}
-                     setCreate={() => {
-                         setCreate(true)
-                         setActiveNoteID(0)
-                     }}
-                     listState={listState}
-            />
-            <div className={classNames('contentContainer')}>
-                <div className="sidebar">
-                    <NotesList handleNoteDelete={handleNoteDelete}
-                               setActiveNote={handleSetActiveNoteID}
-                               notes={notes}
-                               handleNoteChange={handleNoteChange}
-                               listState={isList}
-                               activeNoteID={activeNoteID}
-                    />
-                </div>
-                {(!!activeNoteID || create) && <NoteEditor
-                    create={create}
-                    activeNote={activeNote()}
-                    onNoteChange={handleNoteChange}
-                    onNoteCreate={onNoteCreate}
-                />}
+            <div className="App">
+                <Toolbar handleNoteDelete={handleNoteDelete}
+                         activeNoteID={activeNoteID}
+                         notes={notes}
+                         setCreate={() => {
+                             setCreate(true)
+                             setActiveNoteID(0)
+                         }}
+                         listState={listState}
+                />
+
+                    <div className={classNames('contentContainer')}>
+
+                            <div className="sidebar">
+                                <NotesList handleNoteDelete={handleNoteDelete}
+                                           setActiveNote={handleSetActiveNoteID}
+                                           activeNoteID={activeNoteID}
+                                           notes={notes}
+                                           handleNoteChange={handleNoteChange}
+                                           listState={isList}
+
+                                />
+                            </div>
+                        {(!!activeNoteID || create) && <NoteEditor
+                            create={create}
+                            activeNote={activeNote()}
+                            onNoteChange={handleNoteChange}
+                            onNoteCreate={onNoteCreate}
+                        />}
+
+                    </div>
+
             </div>
-        </div>);
+    )
 }
 
 export default App;

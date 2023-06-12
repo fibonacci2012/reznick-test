@@ -5,7 +5,6 @@ import classNames from "classnames";
 const NoteEditor = (props) => {
     const {activeNote, onNoteChange, create, onNoteCreate, listState} = props;
     const [noteText, setNoteText] = useState(activeNote?.body ?? '');
-
     useEffect(() => {
         if (!!activeNote) {
           setNoteText(activeNote.body)
@@ -13,7 +12,6 @@ const NoteEditor = (props) => {
           setNoteText('')
         }
     }, [activeNote])
-
     const handleTextChange = (e) => {
         setNoteText(e.target.value);
         onNoteChange(activeNote.id, e.target.value)
