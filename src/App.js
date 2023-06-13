@@ -74,12 +74,14 @@ function App() {
     // for now show editor only if note selected
     const activeNote = useCallback(() => notes?.find(note => note.id === activeNoteID), [notes, activeNoteID])
     const onDragEnd = (result) => {
+    }
+    const onDragStart = (start) => {
 
     }
 
     return (
-        <DragDropContext>
-            {() => (
+        <DragDropContext
+            onDragEnd={onDragEnd}>
                 <div className="App">
                     <Toolbar handleNoteDelete={handleNoteDelete}
                              activeNoteID={activeNoteID}
@@ -109,8 +111,6 @@ function App() {
                         />}
                     </div>
                 </div>
-
-            )};
         </DragDropContext>
     )
 }

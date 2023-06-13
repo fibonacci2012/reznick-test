@@ -1,4 +1,5 @@
 import {useCallback, useState} from "react";
+import './DeleteButton.scss';
 import imgTrash from '../../img/trash.png';
 import {Button, Popconfirm} from "antd";
 import classNames from "classnames";
@@ -12,7 +13,7 @@ function DeleteButton(props) {
     }, [activeNoteID]);
     const cancel = () => console.log('No');
     return (
-        <div className={classNames("delete_btn")}>
+        <div className={classNames("delete__el")}>
             <Popconfirm
                 title="Delete the note"
                 description="Are you sure to delete this note?"
@@ -23,8 +24,11 @@ function DeleteButton(props) {
                 disabled={(activeNoteID === 0)}
             >
                 <Button
-                    className={classNames("toolbar__grid__1row__btn_delete", [!activeNoteID && 'toolbar__grid__1row__btn_delete-disabled'])}
-                    icon={imgTrashC}></Button>
+                    className={classNames("delete__el-btn", [!activeNoteID && "delete__el-btn__disabled"])}
+                    icon={imgTrashC}>
+                </Button>
+
+
             </Popconfirm>
         </div>
     )
