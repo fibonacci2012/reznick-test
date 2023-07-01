@@ -4,7 +4,6 @@ import './App.css';
 import NotesList from "./components/NotesList/NotesList";
 import Toolbar from "./components/Toolbar/Toolbar";
 import classNames from "classnames";
-import {DragDropContext} from "react-beautiful-dnd";
 
 function App() {
     const [notes, setNotes] = useState([]);
@@ -46,6 +45,7 @@ function App() {
         const updatedNotes = notes.map(note => {
             if (note.id === id) {
                 return {
+                    dragKey: note.dragKey,
                     id: note.id,
                     title: value,
                     body: value
@@ -57,7 +57,9 @@ function App() {
         localStorage.setItem('notes', JSON.stringify(updatedNotes));
     };
     const onNoteCreate = (value) => {
-        const newNote = {id: new Date().getTime(), title: value, body: value}
+        const maxDragKey = notes.length ? Math.max(...notes.map(o => parseFloat(o.dragKey.slice(8, 20)))) : 0
+        const newNote = {dragKey: `dragKey-${maxDragKey + 1}`, id: new Date().getTime(), title: value, body: value}
+        console.log(newNote)
         let newNotes = notes
         newNotes.push(newNote)
         setNotes(newNotes);
@@ -73,45 +75,43 @@ function App() {
 
     // for now show editor only if note selected
     const activeNote = useCallback(() => notes?.find(note => note.id === activeNoteID), [notes, activeNoteID])
-    const onDragEnd = (result) => {
-    }
+
     const onDragStart = (start) => {
 
     }
 
     return (
-        <DragDropContext
-            onDragEnd={onDragEnd}>
-                <div className="App">
-                    <Toolbar handleNoteDelete={handleNoteDelete}
-                             activeNoteID={activeNoteID}
-                             notes={notes}
-                             setCreate={() => {
-                                 setCreate(true)
-                                 setActiveNoteID(0)
-                             }}
-                             listState={listState}
-                    />
-                    <div className={classNames('contentContainer')}>
-                        <div className="sidebar">
-                            <NotesList handleNoteDelete={handleNoteDelete}
-                                       setActiveNote={handleSetActiveNoteID}
-                                       activeNoteID={activeNoteID}
-                                       notes={notes}
-                                       handleNoteChange={handleNoteChange}
-                                       listState={isList}
 
-                            />
-                        </div>
-                        {(!!activeNoteID || create) && <NoteEditor
-                            create={create}
-                            activeNote={activeNote()}
-                            onNoteChange={handleNoteChange}
-                            onNoteCreate={onNoteCreate}
-                        />}
+            <div className="App">
+                <Toolbar handleNoteDelete={handleNoteDelete}
+                         activeNoteID={activeNoteID}
+                         notes={notes}
+                         setCreate={() => {
+                             setCreate(true)
+                             setActiveNoteID(0)
+                         }}
+                         listState={listState}
+                />
+                <div className={classNames('contentContainer')}>
+                    <div className="sidebar">
+                        <NotesList handleNoteDelete={handleNoteDelete}
+                                   setActiveNote={handleSetActiveNoteID}
+                                   activeNoteID={activeNoteID}
+                                   notes={notes}
+                                   setNotes={setNotes}
+                                   handleNoteChange={handleNoteChange}
+                                   listState={isList}
+
+                        />
                     </div>
+                    {(!!activeNoteID || create) && <NoteEditor
+                        create={create}
+                        activeNote={activeNote()}
+                        onNoteChange={handleNoteChange}
+                        onNoteCreate={onNoteCreate}
+                    />}
                 </div>
-        </DragDropContext>
+            </div>
     )
 }
 
